@@ -7,12 +7,12 @@ var slideTiming = 300
 var maxWidth = $('.sp-large img').width();
 
 // Prevent clicking while things are happening
-$('.sp-thumbs').live('click', function (event) {
+$("body").on('click', '.sp-thumbs', function (event) {
     event.preventDefault();
 });
 
 // Clicking a thumbnail
-$('.sp-tb-active a').live('click', function (event) {
+$("body").on('click', '.sp-tb-active a', function (event) {
     $('.sp-current').removeClass();
     $('.sp-thumbs').removeClass('sp-tb-active');
     $('.sp-zoom').remove();
@@ -38,7 +38,7 @@ $('.sp-tb-active a').live('click', function (event) {
 });
 
 // Zoom In
-$('.sp-large a').live('click', function (event) {
+$("body").on('click', '.sp-large a', function (event) {
     var largeUrl = $(this).attr('href');
     $('.sp-large').append('<div class="sp-zoom"><img src="' + largeUrl + '"/></div>');
     $('.sp-zoom').fadeIn();
@@ -72,7 +72,27 @@ $(document).ready(function () {
         //
     });
 });
+/*
+ ("DeviceOrientationEvent" in window) ? window.addEventListener('deviceorientation', deviceOrientationHandler, false) : alert("Sorry, no gyroscope detected.");
 
+    function deviceOrientationHandler(e) {
+        var viewWidth = $('.sp-large').width();
+        var viewHeight = $('.sp-large').height();
+        var largeWidth = $('.sp-zoom').width();
+        var largeHeight = $('.sp-zoom').height();
+        var pitchInit = Math.floor(e.beta)+90;
+        var pitch = Math.floor((pitchInit * (viewWidth - largeWidth) / 220));
+        var rollInit = Math.floor(e.gamma)+180;
+        var rollAdj = Math.floor(rollInit);
+        var roll = Math.floor((rollInit * (viewHeight - largeHeight) / viewHeight));
+        $('.sp-zoom').css({
+            top : pitch + 'px',
+            left : roll + 'px'
+            
+        });
+        $('h1').html('' +rollInit+' | '+roll+'');
+    }
+*/
 // Zoom out
 $('.sp-zoom').live('click', function (event) {
     $(this).fadeOut(function () {
