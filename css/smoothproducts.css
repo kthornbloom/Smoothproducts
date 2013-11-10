@@ -38,7 +38,7 @@ html, body {
     display:inline-block;
 }
 .sp-thumbs a:hover, .sp-thumbs a:active, .sp-current {
-    border:5px solid #5BC9B7!important;
+    border:5px solid #222!important;
 }
 .sp-zoom {
     position:absolute;

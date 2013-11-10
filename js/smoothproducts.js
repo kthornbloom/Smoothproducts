@@ -7,12 +7,12 @@ var slideTiming = 300
 var maxWidth = $('.sp-large img').width();
 
 // Prevent clicking while things are happening
-$("body").on('click', '.sp-thumbs', function (event) {
+$(document.body).on('click', '.sp-thumbs' ,function(event){
     event.preventDefault();
 });
 
 // Clicking a thumbnail
-$("body").on('click', '.sp-tb-active a', function (event) {
+    $(document.body).on('click', '.sp-tb-active a' ,function(event){
     $('.sp-current').removeClass();
     $('.sp-thumbs').removeClass('sp-tb-active');
     $('.sp-zoom').remove();
@@ -38,7 +38,7 @@ $("body").on('click', '.sp-tb-active a', function (event) {
 });
 
 // Zoom In
-$("body").on('click', '.sp-large a', function (event) {
+$(document.body).on('click', '.sp-large a' ,function(){
     var largeUrl = $(this).attr('href');
     $('.sp-large').append('<div class="sp-zoom"><img src="' + largeUrl + '"/></div>');
     $('.sp-zoom').fadeIn();
@@ -72,8 +72,10 @@ $(document).ready(function () {
         //
     });
 });
-/*
- ("DeviceOrientationEvent" in window) ? window.addEventListener('deviceorientation', deviceOrientationHandler, false) : alert("Sorry, no gyroscope detected.");
+
+// Panning on mobile devices using Gyroscope. Aw Yeah.
+
+ ("DeviceOrientationEvent" in window) ? window.addEventListener('deviceorientation', deviceOrientationHandler, false) : alert() ;
 
     function deviceOrientationHandler(e) {
         var viewWidth = $('.sp-large').width();
@@ -81,20 +83,35 @@ $(document).ready(function () {
         var largeWidth = $('.sp-zoom').width();
         var largeHeight = $('.sp-zoom').height();
         var pitchInit = Math.floor(e.beta)+90;
-        var pitch = Math.floor((pitchInit * (viewWidth - largeWidth) / 220));
+        var pitch = Math.floor((-(largeHeight - viewHeight)/(150-100))*(pitchInit-100));
         var rollInit = Math.floor(e.gamma)+180;
-        var rollAdj = Math.floor(rollInit);
-        var roll = Math.floor((rollInit * (viewHeight - largeHeight) / viewHeight));
-        $('.sp-zoom').css({
-            top : pitch + 'px',
-            left : roll + 'px'
-            
-        });
-        $('h1').html('' +rollInit+' | '+roll+'');
+        var roll = Math.floor((-(largeWidth - viewWidth)/(200-160))*(rollInit-160));
+
+        // Prevent moving too far on X axis
+        if (roll < -(largeWidth - viewWidth)) {
+            //
+        } else if(roll > 0){
+            //
+        } else {
+            $('.sp-zoom').css({
+                left : roll + 'px'
+            }); 
+        }
+
+        // Prevent moving too far on Y axis
+        if (pitch < -(largeHeight - viewHeight)) {
+            //
+        } else if(pitch > 0){
+            //
+        } else {
+            $('.sp-zoom').css({
+                top : pitch + 'px'
+            }); 
+        }
     }
-*/
+
 // Zoom out
-$('.sp-zoom').live('click', function (event) {
+$(document.body).on('click', '.sp-zoom' ,function(event){
     $(this).fadeOut(function () {
         $(this).remove();
     });
