@@ -1,5 +1,3 @@
-/*global $:false */
-
 // Add some markup & set some CSS
 $('.sp-wrap').append('<div class="sp-large"></div><div class="sp-thumbs sp-tb-active"></div>');
 $('.sp-wrap a').appendTo('.sp-thumbs');
@@ -76,17 +74,14 @@ $(document).ready(function () {
 });
 
 // Panning on mobile devices using Gyroscope. Aw Yeah.
-
 window.ondeviceorientation = function(event) {
-
-    function deviceOrientationHandler(e) {
         var viewWidth = $('.sp-large').width();
         var viewHeight = $('.sp-large').height();
         var largeWidth = $('.sp-zoom').width();
         var largeHeight = $('.sp-zoom').height();
-        var pitchInit = Math.floor(e.beta)+90;
+        var pitchInit = Math.floor(event.beta)+90;
         var pitch = Math.floor((-(largeHeight - viewHeight)/(150-100))*(pitchInit-100));
-        var rollInit = Math.floor(e.gamma)+180;
+        var rollInit = Math.floor(event.gamma)+180;
         var roll = Math.floor((-(largeWidth - viewWidth)/(200-160))*(rollInit-160));
 
         // Prevent moving too far on X axis
@@ -111,7 +106,7 @@ window.ondeviceorientation = function(event) {
             }); 
         }
     }
-};
+
 
 // Zoom out
 $(document.body).on('click', '.sp-zoom' ,function(event){
