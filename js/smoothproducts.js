@@ -1,9 +1,11 @@
+/*global $:false */
+
 // Add some markup & set some CSS
 $('.sp-wrap').append('<div class="sp-large"></div><div class="sp-thumbs sp-tb-active"></div>');
 $('.sp-wrap a').appendTo('.sp-thumbs');
 $('.sp-thumbs a:first').addClass('sp-current').clone().removeClass('sp-current').appendTo('.sp-large');
 $('.sp-wrap').css('display', 'inline-block');
-var slideTiming = 300
+var slideTiming = 300;
 var maxWidth = $('.sp-large img').width();
 
 // Prevent clicking while things are happening
@@ -38,14 +40,14 @@ $(document.body).on('click', '.sp-thumbs' ,function(event){
 });
 
 // Zoom In
-$(document.body).on('click', '.sp-large a' ,function(){
+$(document.body).on('click', '.sp-large a' ,function(event){
     var largeUrl = $(this).attr('href');
     $('.sp-large').append('<div class="sp-zoom"><img src="' + largeUrl + '"/></div>');
     $('.sp-zoom').fadeIn();
     $('.sp-large').css({
         left: 0,
         top: 0
-    })
+    });
     
     event.preventDefault();
 });
@@ -75,7 +77,7 @@ $(document).ready(function () {
 
 // Panning on mobile devices using Gyroscope. Aw Yeah.
 
- ("DeviceOrientationEvent" in window) ? window.addEventListener('deviceorientation', deviceOrientationHandler, false) : alert() ;
+window.ondeviceorientation = function(event) {
 
     function deviceOrientationHandler(e) {
         var viewWidth = $('.sp-large').width();
@@ -109,6 +111,7 @@ $(document).ready(function () {
             }); 
         }
     }
+};
 
 // Zoom out
 $(document.body).on('click', '.sp-zoom' ,function(event){
