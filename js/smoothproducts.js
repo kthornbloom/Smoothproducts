@@ -1,3 +1,12 @@
+/*
+ * Smoothproducts
+ * http://kthornbloom.com/smoothproducts.php
+ *
+ * Copyright 2013, Kevin Thornbloom
+ * Free to use and abuse under the MIT license.
+ * http://www.opensource.org/licenses/mit-license.php
+ */
+
 // Add some markup & set some CSS
 $('.sp-wrap').append('<div class="sp-large"></div><div class="sp-thumbs sp-tb-active"></div>');
 $('.sp-wrap a').appendTo('.sp-thumbs');
