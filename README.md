@@ -40,6 +40,8 @@ A lightweight & simple jQuery product viewer script by <a href="http://kthornblo
 	</div>
 ```
 
+##Known Issues
+- Only one instance may be used per page (for now)
 
 ##Licensing
 Free to use and modify personally or commercially. Not for resale. 
