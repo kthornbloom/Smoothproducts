@@ -7,18 +7,35 @@ A lightweight & simple jQuery product viewer script by <a href="http://kthornblo
 
 ##Features
 
-- Lightweight script
-- Animates to different image heights (see fourth item in demo)
-- Thumbnail, normal, and large views
-- Responsive image sizes (resize this page)
-- Indicator for thumbnail currently open
+- Zooming & panning features for desktops and touch screens
+- Odd image size handling
+- Container is responsive
+- Thumbnails with indicators
+- Minimal markup
 
 ##Usage
 
-- Add smoothproducts.js and smoothproducts.css to your page
-- Create a div with a class of "sp-wrap".
-- Place medium sized images within "sp-wrap" and link them to the full size image
-- Smoothproducts takes care of the rest!
+- Add the CSS to your stylesheet, or just call it in your header:
+```
+	<link rel="stylesheet" href="css/smoothproducts.css">
+```
+- Add & call javascript in your footer:
+```
+	<script type="text/javascript" src="js/smoothproducts.js"></script>
+	<script type="text/javascript">
+        /* wait for images to load */
+        $(window).load( function() {
+            $('.sp-wrap').smoothproducts();
+        });
+    </script>
+```
+- Add HTML Markup
+```
+	<div class="sp-wrap">
+		<a href="images/1.jpg"><img src="images/1_tb.jpg" alt=""></a>
+		<a href="images/2.jpg"><img src="images/2_tb.jpg" alt=""></a>
+	</div>
+```
 
 
 ##Licensing

@@ -92,37 +92,38 @@
 <a href="images/2.jpg"><img src="images/2_tb.jpg" alt=""></a>
 <a href="images/3.jpg"><img src="images/3_tb.jpg" alt=""></a>
 <a href="images/4.jpg"><img src="images/4_tb.jpg" alt=""></a>
+<a href="images/5.jpg"><img src="images/5_tb.jpg" alt=""></a>
+<a href="images/6.jpg"><img src="images/6_tb.jpg" alt=""></a>
 </div>
 
+
+<div id="test"></div>
 A simple, lightweight, and responsive jQuery product image viewer by <a href="http://kthornbloom.com">Kevin Thornbloom</a>.
 
 
 <br>
 
-
 <h2>Features</h2>
 <ul>
 	<li>Lightweight script</li>
-	<li>Animates to different image heights (see fourth item in demo)</li>
-	<li>Click to zoom & pan image</li>
-	<li>Responsive image sizes (resize this page)</li>
+	<li>Animates to different image heights (see 4th item)</li>
+	<li>Click to zoom & pan image on desktop</li>
+	<li>Tap & drag to zoom & pan on mobile</li>
+	<li>Whole item is responsive</li>
 	<li>Indicator for thumbnail currently open</li>
 </ul>
 
-<div class="clear"></div>
-
-<h2>Usage</h2>
-<ol>
-	<li>Add smoothproducts.js and smoothproducts.css to your page</li>
-	<li>Create a div with a class of "sp-wrap".</li>
-	<li>Place medium sized images within "sp-wrap" and link them to the full size image</li>
-	<li>Smoothproducts takes care of the rest!</li>
-</ol>
 <a href="http://github.com/kthornbloom/Smoothproducts" class="button">Download & Docs</a>
 </div><br>
 <!-- JS ======================================================= --> 
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.js"></script>
-	<script type="text/javascript" src="js/smoothproducts.min.js"></script>
+	<script type="text/javascript" src="js/smoothproducts.js"></script>
+	<script type="text/javascript">
+                /* wait for images to load */
+                $(window).load( function() {
+                    $('.sp-wrap').smoothproducts();
+                });
+        </script>
 	
 </body>
 </html>
