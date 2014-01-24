@@ -16,10 +16,12 @@ A lightweight & simple jQuery product viewer script by <a href="http://kthornblo
 ##Usage
 
 - Add the CSS to your stylesheet, or just call it in your header:
+
 ```
 	<link rel="stylesheet" href="css/smoothproducts.css">
 ```
 - Add & call javascript in your footer:
+
 ```
 	<script type="text/javascript" src="js/smoothproducts.js"></script>
 	<script type="text/javascript">
@@ -30,6 +32,7 @@ A lightweight & simple jQuery product viewer script by <a href="http://kthornblo
     </script>
 ```
 - Add HTML Markup
+
 ```
 	<div class="sp-wrap">
 		<a href="images/1.jpg"><img src="images/1_tb.jpg" alt=""></a>
