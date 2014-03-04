@@ -12,6 +12,7 @@ A lightweight & simple jQuery product viewer script by <a href="http://kthornblo
 - Container is responsive
 - Thumbnails with indicators
 - Minimal markup
+- Multiple Instances allowed.
 
 ##Usage
 
@@ -39,9 +40,14 @@ A lightweight & simple jQuery product viewer script by <a href="http://kthornblo
 		<a href="images/2.jpg"><img src="images/2_tb.jpg" alt=""></a>
 	</div>
 ```
+- You may wish to add a max-width equal to the width of your preview images. Apply this to the .sp-wrap class in the stylesheet.
 
-##Known Issues
-- Only one instance may be used per page (for now)
+```
+	.sp-wrap {
+	    max-width: 300px;
+	}
+```
+
 
 ##Licensing
 Free to use and modify personally or commercially. Not for resale. 
