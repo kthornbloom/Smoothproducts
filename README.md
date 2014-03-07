@@ -32,7 +32,7 @@ A lightweight & simple jQuery product viewer script by <a href="http://kthornblo
         });
     </script>
 ```
-- Add HTML Markup
+- Add HTML Markup of a wrapper div called "sp-wrap". Inside should be your medium-sized thumbnail images. Each thumbnail should be linked to the higher-resolution version of its self. Use thumbnails of the same width for best results. (You may use different heights)
 
 ```
 	<div class="sp-wrap">
@@ -53,5 +53,5 @@ A lightweight & simple jQuery product viewer script by <a href="http://kthornblo
 Free to use and modify personally or commercially. Not for resale. 
 
 ##Help & Feedback
-Connect with me on <a href="https://twitter.com/kthornbloom" target="_blank">twitter.</a>
+Make something cool with this? Let me know on <a href="https://twitter.com/kthornbloom" target="_blank">twitter!</a>
 

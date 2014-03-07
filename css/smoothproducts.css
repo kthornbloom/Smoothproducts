@@ -1,7 +1,9 @@
+/* Needed for the lightbox */
 html, body {
     height:100%; width:100%;
 }
 
+/* Element wrapper */
 .sp-wrap {
     display:none;
     line-height:0;
@@ -10,23 +12,13 @@ html, body {
     position:relative;
     margin:0 25px 15px 0;
     float:left;
+    /**************
+      Set max-width to your thumbnail width
+    ***************/
     max-width: 300px;
 }
-.sp-large {
-    position:relative;
-    overflow:hidden;
-    top:0;
-    left:0;
-}
-.sp-large a img {
-    max-width:100%;
-    height:auto;
-    cursor: -webkit-zoom-in;
-    cursor: -moz-zoom-in;
-}
-.sp-large a {
-    display:inline-block;
-}
+
+/* Thumbnails */
 .sp-thumbs {
     text-align:left;
     border-top:2px solid #F0353A;
@@ -61,6 +53,25 @@ html, body {
     top:0;
     margin-left:-6px;
 }
+
+/* Unzoomed, big thumbnail */
+.sp-large {
+    position:relative;
+    overflow:hidden;
+    top:0;
+    left:0;
+}
+.sp-large a img {
+    max-width:100%;
+    height:auto;
+    cursor: -webkit-zoom-in;
+    cursor: -moz-zoom-in;
+}
+.sp-large a {
+    display:inline-block;
+}
+
+/* Panning Zoomed Image */
 .sp-zoom {
     position:absolute;
     left:0;
@@ -71,6 +82,61 @@ html, body {
     display:none;
 }
 
+/* Button to go full size */
+.sp-full-screen {
+    position: absolute;
+    z-index: 1;
+    display: block;
+    right: 0;
+    top: 0;
+    font-size: 20px;
+    line-height: 1em;
+    width: 19px;
+    height: 20px;
+    padding: 0 0 2px 1px;
+    background: #F0353A;
+}
+.sp-full-screen a:link,
+.sp-full-screen a:visited {
+    background: none;
+    color: #fff;
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    text-decoration: none;
+    text-align: center;
+    display: block;
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+/* Lightbox */
+.sp-lightbox {
+    position: fixed;
+    top:0;
+    left:0;
+    height: 100%;
+    width:100%;
+    background:rgb(0,0,0);
+    background:rgba(0,0,0,.8);
+    z-index: 999;
+    display: none;
+}
+.sp-lightbox img {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* Remove margin in mobile view */
 @media screen and (max-width: 400px) {
     .sp-wrap {
         margin:0 0 15px 0;

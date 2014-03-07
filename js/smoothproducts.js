@@ -35,6 +35,9 @@
                 $(this).parent().find('.sp-current').removeClass();
                 $(this).parent().parent().find('.sp-thumbs').removeClass('sp-tb-active');
                 $(this).parent().parent().find('.sp-zoom').remove();
+                $(this).parent().parent().find('.sp-full-screen').fadeOut(function() {
+                    $(this).remove();
+                });
 
                 var currentHeight = $(this).parent().parent().find('.sp-large').height(),
                     currentWidth = $(this).parent().parent().find('.sp-large').width();
@@ -45,7 +48,6 @@
                 });
 
                 $(this).parent().parent().find('.sp-large a').remove();
-                // 1. Add current to tb 2. clone it, hide it, append it to large, add class, fade in.
                 $(this).addClass('sp-current').clone().hide().removeClass('sp-current').appendTo($(this).parent().parent().find('.sp-large')).addClass('sp-current-big').fadeIn(slideTiming, function() {
 
                     var autoHeight = $(this).parent().parent().find('.sp-large img').height();
@@ -70,21 +72,39 @@
                 $(this).parent().parent().find('.sp-large').append('<div class="sp-zoom"><img src="' + largeUrl + '"/></div>');
                 $(this).parent().parent().find('.sp-zoom').fadeIn();
                 $(this).parent().parent().find(".sp-zoom").draggable();
+                $(this).parent().parent().prepend('<div class="sp-full-screen"><a href="#">↕</a></div>');
                 event.preventDefault();
             });
+
+            // Open in Lightbox
+
+            $(document.body).on('click', '.sp-full-screen', function(event) {
+                var currentImg = $(this).parent().find('.sp-large .sp-zoom').html();
+                $('body').append("<div class='sp-lightbox'>"+currentImg+"</div>");
+                $('.sp-lightbox').fadeIn();
+            });
+
+            // Close Lightbox
+
+            $(document.body).on('click', '.sp-lightbox', function(event) {
+                $(this).fadeOut(function(){
+                    $(this).remove();
+                })
+            });
+
 
             // Panning zoomed PC
 
             $('.sp-large').mousemove(function(e) {
-                var viewWidth = $(this).width();
-                var viewHeight = $(this).height();
-                var largeWidth = $(this).find('.sp-zoom').width();
-                var largeHeight = $(this).find('.sp-zoom').height();
-                var parentOffset = $(this).parent().offset();
-                var relativeXPosition = (e.pageX - parentOffset.left);
-                var relativeYPosition = (e.pageY - parentOffset.top);
-                var moveX = Math.floor((relativeXPosition * (viewWidth - largeWidth) / viewWidth));
-                var moveY = Math.floor((relativeYPosition * (viewHeight - largeHeight) / viewHeight));
+                var viewWidth = $(this).width(),
+                    viewHeight = $(this).height(),
+                    largeWidth = $(this).find('.sp-zoom').width(),
+                    largeHeight = $(this).find('.sp-zoom').height(),
+                    parentOffset = $(this).parent().offset(),
+                    relativeXPosition = (e.pageX - parentOffset.left),
+                    relativeYPosition = (e.pageY - parentOffset.top),
+                    moveX = Math.floor((relativeXPosition * (viewWidth - largeWidth) / viewWidth)),
+                    moveY = Math.floor((relativeYPosition * (viewHeight - largeHeight) / viewHeight));
 
                 $(this).find('.sp-zoom').css({
                     left: moveX,
@@ -92,7 +112,7 @@
                 });
 
             }).mouseout(function() {
-                //
+                // Pause Panning
             });
 
             // Panning zoomed Mobile - inspired by http://popdevelop.com/2010/08/touching-the-web/
@@ -131,6 +151,9 @@
 
             // Zoom Out
             $(document.body).on('click', '.sp-zoom', function(event) {
+                $(this).parent().parent().find('.sp-full-screen').fadeOut(function() {
+                    $(this).remove();
+                });
                 $(this).fadeOut(function() {
                     $(this).remove();
                 });
