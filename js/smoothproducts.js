@@ -92,6 +92,15 @@
                 })
             });
 
+            $(document).keydown(function(e){
+                if (e.keyCode == 27) { 
+                    $('.sp-lightbox').fadeOut(function(){
+                        $(this).remove();
+                    })
+                    return false;
+                }
+            });
+
 
             // Panning zoomed PC
 
