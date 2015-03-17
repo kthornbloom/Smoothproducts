@@ -1,5 +1,5 @@
 /*
- * Smoothproducts
+ * Smoothproducts version 2.0.1
  * http://kthornbloom.com/smoothproducts.php
  *
  * Copyright 2013, Kevin Thornbloom
@@ -161,7 +161,6 @@
 
 			// Pagination Forward
 			$(document.body).on('click', '#sp-next', function(event) {
-
 				event.stopPropagation();
 				var currentEq = $('.sp-lightbox').data('currenteq'),
 					totalItems = $('.sp-selected .sp-thumbs a').length;
@@ -185,6 +184,8 @@
 							$('.sp-lightbox img').hide().fadeIn(250);
 						});
 					}
+
+				event.preventDefault();
 			});
 
 		// Pagination Backward
@@ -213,6 +214,7 @@
 							$('.sp-lightbox img').hide().fadeIn(250);
 						});
 					}
+				event.preventDefault();
 			});
 
 
