@@ -8,166 +8,254 @@
  */
 
 (function($) {
-    $.fn.extend({
-        smoothproducts: function() {
+	$.fn.extend({
+		smoothproducts: function() {
 
 
-            var slideTiming = 300
+			var slideTiming = 300
 
-            // Add some markup & set some CSS
-            $('.sp-wrap').append('<div class="sp-large"></div><div class="sp-thumbs sp-tb-active"></div>');
+			// Add some markup & set some CSS
 
-            $('.sp-wrap').each(function() {
-                $('a', this).appendTo($('.sp-thumbs', this));
-                $('.sp-thumbs a:first', this).addClass('sp-current').clone().removeClass('sp-current').appendTo($('.sp-large', this)).addClass('sp-current-big');
-                $('.sp-wrap').css({
-                    display: 'inline-block'
-                });
-            });
+			$('.sp-loading').hide();
+			$('.sp-wrap').each(function() {
+				$(this).addClass('sp-touch');
+				thumbQty = $('a', this).length;
 
-            // Prevent clicking while things are happening
-            $(document.body).on('click', '.sp-thumbs', function(event) {
-                event.preventDefault();
-            });
+				// If more than one image
+				if (thumbQty > 1) {
+					$(this).append('<div class="sp-large"></div><div class="sp-thumbs sp-tb-active"></div>');
+					$('a', this).each(function() {
+						var thumb = $('img', this).attr('src'),
+							large = $(this).attr('href');
+						$(this).parents('.sp-wrap').find('.sp-thumbs').append('<a href="' + large + '" style="background-image:url(' + thumb + ')"></a>');
+						$(this).remove();
+					});
+					$('.sp-thumbs a:first', this).addClass('sp-current');
+					var firstLarge = $('.sp-thumbs a:first', this).attr('href'),
+						firstThumb = $('.sp-thumbs a:first', this).css('backgroundImage'),
+						firstThumb = firstThumb.replace('url(', '').replace(')', '');
+					$('.sp-large', this).append('<a href="' + firstLarge + '" class="sp-current-big"><img src="' + firstThumb + '"/></a>');
+					$('.sp-wrap').css('display', 'inline-block');
+				// If only one image
+				} else {
+					$(this).append('<div class="sp-large"></div>');
+					$('a', this).appendTo($('.sp-large', this)).addClass('.sp-current-big');
+					$('.sp-wrap').css('display', 'inline-block');
+				}
+			});
+			
 
-            // Clicking a thumbnail
-            $(document.body).on('click', '.sp-tb-active a', function(event) {
-                $(this).parent().find('.sp-current').removeClass();
-                $(this).parent().parent().find('.sp-thumbs').removeClass('sp-tb-active');
-                $(this).parent().parent().find('.sp-zoom').remove();
-                $(this).parent().parent().find('.sp-full-screen').fadeOut(function() {
-                    $(this).remove();
-                });
-
-                var currentHeight = $(this).parent().parent().find('.sp-large').height(),
-                    currentWidth = $(this).parent().parent().find('.sp-large').width();
-                $(this).parent().parent().find('.sp-large').css({
-                    overflow: 'hidden',
-                    height: currentHeight + 'px',
-                    width: currentWidth + 'px'
-                });
-
-                $(this).parent().parent().find('.sp-large a').remove();
-                $(this).addClass('sp-current').clone().hide().removeClass('sp-current').appendTo($(this).parent().parent().find('.sp-large')).addClass('sp-current-big').fadeIn(slideTiming, function() {
-
-                    var autoHeight = $(this).parent().parent().find('.sp-large img').height();
-
-                    $(this).parent().parent().find('.sp-large').animate({
-                        height: autoHeight
-                    }, 'fast', function() {
-                        $('.sp-large').css({
-                            height: 'auto',
-                            width: 'auto'
-                        });
-                    });
-
-                    $(this).parent().parent().find('.sp-thumbs').addClass('sp-tb-active');
-                });
-                event.preventDefault();
-            });
-
-            // Zoom In
-            $(document.body).on('click', '.sp-large a', function(event) {
-                var largeUrl = $(this).attr('href');
-                $(this).parent().parent().find('.sp-large').append('<div class="sp-zoom"><img src="' + largeUrl + '"/></div>');
-                $(this).parent().parent().find('.sp-zoom').fadeIn();
-                $(this).parent().parent().find(".sp-zoom").draggable();
-                $(this).parent().parent().prepend('<div class="sp-full-screen"><a href="#">↕</a></div>');
-                event.preventDefault();
-            });
-
-            // Open in Lightbox
-
-            $(document.body).on('click', '.sp-full-screen', function(event) {
-                var currentImg = $(this).parent().find('.sp-large .sp-zoom').html();
-                $('body').append("<div class='sp-lightbox'>"+currentImg+"</div>");
-                $('.sp-lightbox').fadeIn();
-            });
-
-            // Close Lightbox
-
-            $(document.body).on('click', '.sp-lightbox', function(event) {
-                $(this).fadeOut(function(){
-                    $(this).remove();
-                })
-            });
-
-            $(document).keydown(function(e){
-                if (e.keyCode == 27) { 
-                    $('.sp-lightbox').fadeOut(function(){
-                        $(this).remove();
-                    })
-                    return false;
-                }
-            });
+			// Prevent clicking while things are happening
+			$(document.body).on('click', '.sp-thumbs', function(event) {
+				event.preventDefault();
+			});
 
 
-            // Panning zoomed PC
+			// Is this a touch screen or not?
+			$(document.body).on('mouseover', function(event) {
+				$('.sp-wrap').removeClass('sp-touch').addClass('sp-non-touch');
+				event.preventDefault();
+			});
 
-            $('.sp-large').mousemove(function(e) {
-                var viewWidth = $(this).width(),
-                    viewHeight = $(this).height(),
-                    largeWidth = $(this).find('.sp-zoom').width(),
-                    largeHeight = $(this).find('.sp-zoom').height(),
-                    parentOffset = $(this).parent().offset(),
-                    relativeXPosition = (e.pageX - parentOffset.left),
-                    relativeYPosition = (e.pageY - parentOffset.top),
-                    moveX = Math.floor((relativeXPosition * (viewWidth - largeWidth) / viewWidth)),
-                    moveY = Math.floor((relativeYPosition * (viewHeight - largeHeight) / viewHeight));
+			$(document.body).on('touchstart', function() {
+				$('.sp-wrap').removeClass('sp-non-touch').addClass('sp-touch');
+			});
 
-                $(this).find('.sp-zoom').css({
-                    left: moveX,
-                    top: moveY
-                });
+			// Clicking a thumbnail
+			$(document.body).on('click', '.sp-tb-active a', function(event) {
 
-            }).mouseout(function() {
-                // Pause Panning
-            });
+				event.preventDefault();
+				$(this).parent().find('.sp-current').removeClass();
+				$(this).addClass('sp-current');
+				$(this).parents('.sp-wrap').find('.sp-thumbs').removeClass('sp-tb-active');
+				$(this).parents('.sp-wrap').find('.sp-zoom').remove();
 
-            // Panning zoomed Mobile - inspired by http://popdevelop.com/2010/08/touching-the-web/
+				var currentHeight = $(this).parents('.sp-wrap').find('.sp-large').height(),
+					currentWidth = $(this).parents('.sp-wrap').find('.sp-large').width();
+				$(this).parents('.sp-wrap').find('.sp-large').css({
+					overflow: 'hidden',
+					height: currentHeight + 'px',
+					width: currentWidth + 'px'
+				});
 
-            $.fn.draggable = function() {
-                var offset = null;
-                var start = function(e) {
-                    var orig = e.originalEvent;
-                    var pos = $(this).position();
-                    offset = {
-                        x: orig.changedTouches[0].pageX - pos.left,
-                        y: orig.changedTouches[0].pageY - pos.top
-                    };
-                };
-                var moveMe = function(e) {
-                    e.preventDefault();
-                    var orig = e.originalEvent,
-                        newY = orig.changedTouches[0].pageY - offset.y,
-                        newX = orig.changedTouches[0].pageX - offset.x,
-                        maxY = (($('.sp-zoom').height()) - ($('.sp-large').height())) * -1,
-                        maxX = (($('.sp-zoom').width()) - ($('.sp-large').width())) * -1;
-                    if (newY > maxY && 0 > newY) {
-                        $(this).css({
-                            top: newY
-                        });
-                    }
-                    if (newX > maxX && 0 > newX) {
-                        $(this).css({
-                            left: newX
-                        });
-                    }
-                };
-                this.bind("touchstart", start);
-                this.bind("touchmove", moveMe);
-            };
+				$(this).addClass('sp-current').parents('.sp-wrap').find('.sp-large a').remove();
 
-            // Zoom Out
-            $(document.body).on('click', '.sp-zoom', function(event) {
-                $(this).parent().parent().find('.sp-full-screen').fadeOut(function() {
-                    $(this).remove();
-                });
-                $(this).fadeOut(function() {
-                    $(this).remove();
-                });
-            });
+				var nextLarge = $(this).parent().find('.sp-current').attr('href'),
+					nextThumb = $(this).parent().find('.sp-current').css('backgroundImage'),
+					nextThumb = nextThumb.replace('url(', '').replace(')', '');
 
-        }
-    });
+				$(this).parents('.sp-wrap').find('.sp-large').html('<a href="' + nextLarge + '" class="sp-current-big"><img src="' + nextThumb + '"/></a>');
+				$(this).parents('.sp-wrap').find('.sp-large').hide().fadeIn(250, function() {
+
+					var autoHeight = $(this).parents('.sp-wrap').find('.sp-large img').height();
+
+					$(this).parents('.sp-wrap').find('.sp-large').animate({
+						height: autoHeight
+					}, 'fast', function() {
+						$('.sp-large').css({
+							height: 'auto',
+							width: 'auto'
+						});
+					});
+
+					$(this).parents('.sp-wrap').find('.sp-thumbs').addClass('sp-tb-active');
+				});
+			});
+
+			// Zoom In non-touch
+			$(document.body).on('mouseenter', '.sp-non-touch .sp-large', function(event) {
+				var largeUrl = $('a', this).attr('href');
+				$(this).append('<div class="sp-zoom"><img src="' + largeUrl + '"/></div>');
+				$(this).find('.sp-zoom').fadeIn(250);
+				event.preventDefault();
+			});
+
+			// Zoom Out non-touch
+			$(document.body).on('mouseleave', '.sp-non-touch .sp-large', function(event) {
+				$(this).find('.sp-zoom').fadeOut(250, function() {
+					$(this).remove();
+				});
+				event.preventDefault();
+			});
+
+			// Open in Lightbox non-touch
+			$(document.body).on('click', '.sp-non-touch .sp-zoom', function(event) {
+				var currentImg = $(this).html(),
+					thumbAmt = $(this).parents('.sp-wrap').find('.sp-thumbs a').length,
+					currentThumb = ($(this).parents('.sp-wrap').find('.sp-thumbs .sp-current').index())+1;
+				$(this).parents('.sp-wrap').addClass('sp-selected');
+				$('body').append("<div class='sp-lightbox' data-currenteq='"+currentThumb+"'>" + currentImg + "</div>");
+				
+				if(thumbAmt > 1){
+					$('.sp-lightbox').append("<a href='#' id='sp-prev'></a><a href='#' id='sp-next'></a>");
+					if(currentThumb == 1) {
+						$('#sp-prev').css('opacity','.1');
+					} else if (currentThumb == thumbAmt){
+						$('#sp-next').css('opacity','.1');
+					}
+				}
+				$('.sp-lightbox').fadeIn();
+				event.preventDefault();
+			});
+
+			// Open in Lightbox touch
+			$(document.body).on('click', '.sp-large a', function(event) {
+				var currentImg = $(this).attr('href'),
+					thumbAmt = $(this).parents('.sp-wrap').find('.sp-thumbs a').length,
+					currentThumb = ($(this).parents('.sp-wrap').find('.sp-thumbs .sp-current').index())+1;
+				
+				$(this).parents('.sp-wrap').addClass('sp-selected');
+				$('body').append("<div class='sp-lightbox' data-currenteq='"+currentThumb+"'><img src='" + currentImg + "'/></div>");
+				
+				if(thumbAmt > 1){
+					$('.sp-lightbox').append("<a href='#' id='sp-prev'></a><a href='#' id='sp-next'></a>");
+					if(currentThumb == 1) {
+						$('#sp-prev').css('opacity','.1');
+					} else if (currentThumb == thumbAmt){
+						$('#sp-next').css('opacity','.1');
+					}
+				}
+				$('.sp-lightbox').fadeIn();
+				event.preventDefault();
+			});
+
+			// Pagination Forward
+			$(document.body).on('click', '#sp-next', function(event) {
+
+				event.stopPropagation();
+				var currentEq = $('.sp-lightbox').data('currenteq'),
+					totalItems = $('.sp-selected .sp-thumbs a').length;
+
+					if(currentEq >= totalItems) {
+					} else {
+						var nextEq = currentEq + 1,
+						newImg = $('.sp-selected .sp-thumbs').find('a:eq('+currentEq+')').attr('href');
+						newThumb = $('.sp-selected .sp-thumbs').find('a:eq('+currentEq+')').css('backgroundImage'),
+						newThumb = newThumb.replace('url(', '').replace(')', '');
+						if (currentEq == (totalItems - 1)) {
+							$('#sp-next').css('opacity','.1');
+						}
+						$('#sp-prev').css('opacity','1');
+						$('.sp-selected .sp-current').removeClass();
+						$('.sp-selected .sp-thumbs a:eq('+currentEq+')').addClass('sp-current');
+						$('.sp-selected .sp-large').empty().append('<a href='+newImg+'><img src="'+newThumb+'"/></a>');
+						$('.sp-lightbox img').fadeOut(250, function() {
+							$(this).remove();
+							$('.sp-lightbox').data('currenteq',nextEq).append('<img src="'+newImg+'"/>');
+							$('.sp-lightbox img').hide().fadeIn(250);
+						});
+					}
+			});
+
+		// Pagination Backward
+			$(document.body).on('click', '#sp-prev', function(event) {
+
+				event.stopPropagation();
+				var currentEq = $('.sp-lightbox').data('currenteq'),
+					currentEq = currentEq - 1,
+					totalItems = $('.sp-selected .sp-thumbs a').length;
+					if(currentEq <= 0) {
+					} else {
+						if (currentEq == 1) {
+							$('#sp-prev').css('opacity','.1');
+						}
+						var nextEq = currentEq - 1,
+						newImg = $('.sp-selected .sp-thumbs').find('a:eq('+nextEq+')').attr('href');
+						newThumb = $('.sp-selected .sp-thumbs').find('a:eq('+nextEq+')').css('backgroundImage'),
+						newThumb = newThumb.replace('url(', '').replace(')', '');
+						$('#sp-next').css('opacity','1');
+						$('.sp-selected .sp-current').removeClass();
+						$('.sp-selected .sp-thumbs a:eq('+nextEq+')').addClass('sp-current');
+						$('.sp-selected .sp-large').empty().append('<a href='+newImg+'><img src="'+newThumb+'"/></a>');
+						$('.sp-lightbox img').fadeOut(250, function() {
+							$(this).remove();
+							$('.sp-lightbox').data('currenteq',currentEq).append('<img src="'+newImg+'"/>');
+							$('.sp-lightbox img').hide().fadeIn(250);
+						});
+					}
+			});
+
+
+			// Close Lightbox
+			$(document.body).on('click', '.sp-lightbox', function(event) {
+				closeModal();
+			});
+
+			// Close on Esc
+			$(document).keydown(function(e) {
+				if (e.keyCode == 27) {
+					closeModal();
+					return false;
+				}
+			});
+
+			function closeModal (){
+				$('.sp-selected').removeClass('sp-selected');
+				$('.sp-lightbox').fadeOut(function() {
+						$(this).remove();
+				});
+			}
+
+
+			// Panning zoomed image (non-touch)
+
+			$('.sp-large').mousemove(function(e) {
+				var viewWidth = $(this).width(),
+					viewHeight = $(this).height(),
+					largeWidth = $(this).find('.sp-zoom').width(),
+					largeHeight = $(this).find('.sp-zoom').height(),
+					parentOffset = $(this).parent().offset(),
+					relativeXPosition = (e.pageX - parentOffset.left),
+					relativeYPosition = (e.pageY - parentOffset.top),
+					moveX = Math.floor((relativeXPosition * (viewWidth - largeWidth) / viewWidth)),
+					moveY = Math.floor((relativeYPosition * (viewHeight - largeHeight) / viewHeight));
+
+				$(this).find('.sp-zoom').css({
+					left: moveX,
+					top: moveY
+				});
+
+			});
+		}
+	});
 })(jQuery);
