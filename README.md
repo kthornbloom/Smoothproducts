@@ -25,7 +25,7 @@ A lightweight & simple jQuery product viewer script by <a href="http://kthornblo
 - Add & call javascript in your footer:
 
 ```
-<script type="text/javascript" src="js/smoothproductsmin.js"></script>
+<script type="text/javascript" src="js/smoothproducts.min.js"></script>
 <script type="text/javascript">
     /* wait for images to load */
     $(window).load( function() {
