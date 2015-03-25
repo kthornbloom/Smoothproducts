@@ -73,7 +73,9 @@ html, body {
 }
 
 /* Image currently being viewed */
-
+.sp-current-big {
+	display: block;
+}
 .sp-large {
 	position: relative;
 	overflow: hidden;
