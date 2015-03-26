@@ -30,6 +30,7 @@
 					$('.sp-thumbs a:first', this).addClass('sp-current');
 					var firstLarge = $('.sp-thumbs a:first', this).attr('href'),
 						firstThumb = get_url_from_background($('.sp-thumbs a:first', this).css('backgroundImage'));
+						//alert(firstThumb);
 					$('.sp-large', this).append('<a href="' + firstLarge + '" class="sp-current-big"><img src="' + firstThumb + '" alt="" /></a>');
 					$('.sp-wrap').css('display', 'inline-block');
 				// If only one image

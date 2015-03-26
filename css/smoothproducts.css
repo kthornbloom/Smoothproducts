@@ -73,9 +73,7 @@ html, body {
 }
 
 /* Image currently being viewed */
-.sp-current-big {
-	display: block;
-}
+
 .sp-large {
 	position: relative;
 	overflow: hidden;
@@ -87,7 +85,7 @@ html, body {
 	height: auto;
 }
 .sp-large a {
-	display: inline-block;
+	display: block;
 }
 
 /* Panning Zoomed Image */
