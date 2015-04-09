@@ -58,6 +58,9 @@ A lightweight & simple jQuery product viewer script by <a href="http://kthornblo
 	}
 ```
 
+##Plugins
+
+A Rails plugin providing the necessary files is [available here](https://github.com/calve/smoothproducts_rails).
 
 ##Licensing
 Free to use and modify personally or commercially. Not for resale. 
