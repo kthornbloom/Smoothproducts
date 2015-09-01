@@ -110,6 +110,7 @@ html, body {
 	background: rgba(0, 0, 0, .9);
 	z-index: 500;
 	display: none;
+	cursor: pointer;
 }
 .sp-lightbox img {
 	position: absolute;
