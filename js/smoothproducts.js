@@ -10,6 +10,16 @@
 (function($) {
 	$.fn.extend({
 		smoothproducts: function() {
+			
+			// Added keypress functionality
+			$(document).keyup(function(e){
+				if (e.keyCode == 39){  
+					$('#sp-next').click();
+				}
+				if(e.keyCode==37){
+					$('#sp-prev').click();
+				}
+			});
 
 			// Add some markup & set some CSS
 
