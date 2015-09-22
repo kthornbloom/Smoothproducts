@@ -96,6 +96,7 @@ html, body {
 	top: -50%;
 	cursor: -webkit-zoom-in;
 	cursor: -moz-zoom-in;
+	cursor: zoom-in;
 	display: none;
 }
 /* Lightbox */
