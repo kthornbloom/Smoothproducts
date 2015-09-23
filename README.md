@@ -57,6 +57,14 @@ A lightweight & simple jQuery product viewer script by <a href="http://kthornblo
 	    max-width: 300px;
 	}
 ```
+- You may add a class of "sp-default" to an image link. This will cause that image to be selected by default when the page loads, instead of the first image in the list.
+
+```
+<div class="sp-wrap">
+	<a href="images/1.jpg"><img src="images/1_tb.jpg" alt=""></a>
+	<a href="images/2.jpg" class="sp-default"><img src="images/2_tb.jpg" alt=""></a>
+</div>
+```
 
 ##Plugins
 
