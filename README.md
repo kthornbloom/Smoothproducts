@@ -41,7 +41,7 @@ A lightweight & simple jQuery product viewer script by <a href="http://kthornblo
 	<a href="images/2.jpg"><img src="images/2_tb.jpg" alt=""></a>
 </div>
 ```
-- You may add an element with a class of "sp-loading" and style it however you'd like. This div will be removed once the images have loaded and the viewer gets added to the page.
+- You may add an element with a class of "sp-loading" and style it however you'd like. This div will be removed once the images have loaded and the viewer gets added to the page. 
 
 ```
 <div class="sp-loading"><img src="images/sp-loading.gif" alt=""><br>LOADING IMAGES</div>
@@ -57,7 +57,7 @@ A lightweight & simple jQuery product viewer script by <a href="http://kthornblo
 	    max-width: 300px;
 	}
 ```
-- You may add a class of "sp-default" to an image link. This will cause that image to be selected by default when the page loads, instead of the first image in the list.
+- You may add a class of "sp-default" to an image link. This will cause that image to be selected by default when the page loads, instead of the first image in the list. (Thanks to <a href="https://github.com/andynoelker">Andy Noelker</a>)
 
 ```
 <div class="sp-wrap">
