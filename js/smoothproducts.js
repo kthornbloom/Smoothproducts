@@ -20,23 +20,24 @@
 
 				// If more than one image
 				if (thumbQty > 1) {
-					var firstLarge,firstThumb,
+					var firstLarge,firstThumb,alt,
 						defaultImage = $('a.sp-default', this)[0]?true:false;
 					$(this).append('<div class="sp-large"></div><div class="sp-thumbs sp-tb-active"></div>');
 					$('a', this).each(function(index) {
 						var thumb = $('img', this).attr('src'),
 							large = $(this).attr('href'),
 							classes = '';
+							alt = $('img', this).attr('alt');
 						//set default image
 						if((index === 0 && !defaultImage) || $(this).hasClass('sp-default')){
 							classes = ' class="sp-current"';
 							firstLarge = large;
 							firstThumb = $('img', this)[0].src;
 						}
-						$(this).parents('.sp-wrap').find('.sp-thumbs').append('<a href="' + large + '" style="background-image:url(' + thumb + ')"'+classes+'></a>');
+						$(this).parents('.sp-wrap').find('.sp-thumbs').append('<a href="' + large + '" style="background-image:url(' + thumb + ')"'+classes+' ' + 'title="' + alt + '"></a>');
 						$(this).remove();
 					});
-					$('.sp-large', this).append('<a href="' + firstLarge + '" class="sp-current-big"><img src="' + firstThumb + '" alt="" /></a>');
+					$('.sp-large', this).append('<a href="' + firstLarge + '" class="sp-current-big"><img src="' + firstThumb + '" alt="' + alt + '" /></a>');
 					$('.sp-wrap').css('display', 'inline-block');
 				// If only one image
 				} else {
@@ -84,8 +85,9 @@
 
 				var nextLarge = $(this).parent().find('.sp-current').attr('href'),
 					nextThumb = get_url_from_background($(this).parent().find('.sp-current').css('backgroundImage'));
+				var alt = $(this).parent().find('.sp-current').attr('title');
 
-				$(this).parents('.sp-wrap').find('.sp-large').html('<a href="' + nextLarge + '" class="sp-current-big"><img src="' + nextThumb + '"/></a>');
+				$(this).parents('.sp-wrap').find('.sp-large').html('<a href="' + nextLarge + '" class="sp-current-big"><img src="' + nextThumb + '" alt="' + alt + '"/></a>');
 				$(this).parents('.sp-wrap').find('.sp-large').hide().fadeIn(250, function() {
 
 					var autoHeight = $(this).parents('.sp-wrap').find('.sp-large img').height();
@@ -143,10 +145,11 @@
 			$(document.body).on('click', '.sp-large a', function(event) {
 				var currentImg = $(this).attr('href'),
 					thumbAmt = $(this).parents('.sp-wrap').find('.sp-thumbs a').length,
-					currentThumb = ($(this).parents('.sp-wrap').find('.sp-thumbs .sp-current').index())+1;
+					currentThumb = ($(this).parents('.sp-wrap').find('.sp-thumbs .sp-current').index())+1,
+					alt = $(this).children('img').attr('alt');
 
 				$(this).parents('.sp-wrap').addClass('sp-selected');
-				$('body').append('<div class="sp-lightbox" data-currenteq="'+currentThumb+'"><img src="' + currentImg + '"/></div>');
+				$('body').append('<div class="sp-lightbox" data-currenteq="'+currentThumb+'"><img src="' + currentImg + '" alt="' + alt + '"/></div>');
 
 				if(thumbAmt > 1){
 					$('.sp-lightbox').append("<a href='#' id='sp-prev'></a><a href='#' id='sp-next'></a>");
@@ -170,17 +173,18 @@
 					} else {
 						var nextEq = currentEq + 1,
 						newImg = $('.sp-selected .sp-thumbs').find('a:eq('+currentEq+')').attr('href'),
-						newThumb = get_url_from_background($('.sp-selected .sp-thumbs').find('a:eq('+currentEq+')').css('backgroundImage'));
+						newThumb = get_url_from_background($('.sp-selected .sp-thumbs').find('a:eq('+currentEq+')').css('backgroundImage')),
+						alt = $('.sp-selected .sp-thumbs').find('a:eq('+currentEq+')').attr('title');
 						if (currentEq == (totalItems - 1)) {
 							$('#sp-next').css('opacity','.1');
 						}
 						$('#sp-prev').css('opacity','1');
 						$('.sp-selected .sp-current').removeClass();
 						$('.sp-selected .sp-thumbs a:eq('+currentEq+')').addClass('sp-current');
-						$('.sp-selected .sp-large').empty().append('<a href='+newImg+'><img src="'+newThumb+'"/></a>');
+						$('.sp-selected .sp-large').empty().append('<a href='+newImg+'><img src="'+newThumb+'" alt="' + alt + '"/></a>');
 						$('.sp-lightbox img').fadeOut(250, function() {
 							$(this).remove();
-							$('.sp-lightbox').data('currenteq',nextEq).append('<img src="'+newImg+'"/>');
+							$('.sp-lightbox').data('currenteq',nextEq).append('<img src="'+newImg+'" alt="' + alt + '"/>');
 							$('.sp-lightbox img').hide().fadeIn(250);
 						});
 					}
@@ -201,14 +205,15 @@
 						}
 						var nextEq = currentEq - 1,
 						newImg = $('.sp-selected .sp-thumbs').find('a:eq('+nextEq+')').attr('href'),
-						newThumb = get_url_from_background($('.sp-selected .sp-thumbs').find('a:eq('+nextEq+')').css('backgroundImage'));
+						newThumb = get_url_from_background($('.sp-selected .sp-thumbs').find('a:eq('+nextEq+')').css('backgroundImage')),
+						alt = $('.sp-selected .sp-thumbs').find('a:eq('+nextEq+')').attr('title');
 						$('#sp-next').css('opacity','1');
 						$('.sp-selected .sp-current').removeClass();
 						$('.sp-selected .sp-thumbs a:eq('+nextEq+')').addClass('sp-current');
-						$('.sp-selected .sp-large').empty().append('<a href='+newImg+'><img src="'+newThumb+'"/></a>');
+						$('.sp-selected .sp-large').empty().append('<a href='+newImg+'><img src="'+newThumb+'" alt="' + alt + '"/></a>');
 						$('.sp-lightbox img').fadeOut(250, function() {
 							$(this).remove();
-							$('.sp-lightbox').data('currenteq',currentEq).append('<img src="'+newImg+'"/>');
+							$('.sp-lightbox').data('currenteq',currentEq).append('<img src="'+newImg+'" alt="' + alt + '"/>');
 							$('.sp-lightbox img').hide().fadeIn(250);
 						});
 					}
