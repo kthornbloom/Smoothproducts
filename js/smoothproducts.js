@@ -242,11 +242,11 @@
 			$('.sp-large').mousemove(function(e) {
 				var viewWidth = $(this).width(),
 					viewHeight = $(this).height(),
+					viewOffset = $(this).offset(),
 					largeWidth = $(this).find('.sp-zoom').width(),
 					largeHeight = $(this).find('.sp-zoom').height(),
-					parentOffset = $(this).parent().offset(),
-					relativeXPosition = (e.pageX - parentOffset.left),
-					relativeYPosition = (e.pageY - parentOffset.top),
+					relativeXPosition = (e.pageX - viewOffset.left),
+					relativeYPosition = (e.pageY - viewOffset.top),
 					moveX = Math.floor((relativeXPosition * (viewWidth - largeWidth) / viewWidth)),
 					moveY = Math.floor((relativeYPosition * (viewHeight - largeHeight) / viewHeight));
 
