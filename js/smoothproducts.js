@@ -9,40 +9,35 @@
 
 (function($) {
 	$.fn.extend({
-		smoothproducts: function() {
+		smoothproducts: function(ctrlID) {
 
 			// Add some markup & set some CSS
 
 			$('.sp-loading').hide();
-			$('.sp-wrap').each(function() {
+			$(ctrlID).each(function() {
 				$(this).addClass('sp-touch');
 				var thumbQty = $('a', this).length;
 
 				// If more than one image
 				if (thumbQty > 1) {
-					var firstLarge,firstThumb,
-						defaultImage = $('a.sp-default', this)[0]?true:false;
 					$(this).append('<div class="sp-large"></div><div class="sp-thumbs sp-tb-active"></div>');
-					$('a', this).each(function(index) {
+					$('a', this).each(function() {
 						var thumb = $('img', this).attr('src'),
-							large = $(this).attr('href'),
-							classes = '';
-						//set default image
-						if((index === 0 && !defaultImage) || $(this).hasClass('sp-default')){
-							classes = ' class="sp-current"';
-							firstLarge = large;
-							firstThumb = $('img', this)[0].src;
-						}
-						$(this).parents('.sp-wrap').find('.sp-thumbs').append('<a href="' + large + '" style="background-image:url(' + thumb + ')"'+classes+'></a>');
+							large = $(this).attr('href');
+						$(this).parents(ctrlID).find('.sp-thumbs').append('<a href="' + large + '" style="background-image:url(' + thumb + ')"></a>');
 						$(this).remove();
 					});
+					$('.sp-thumbs a:first', this).addClass('sp-current');
+					var firstLarge = $('.sp-thumbs a:first', this).attr('href'),
+						firstThumb = get_url_from_background($('.sp-thumbs a:first', this).css('backgroundImage'));
+						//alert(firstThumb);
 					$('.sp-large', this).append('<a href="' + firstLarge + '" class="sp-current-big"><img src="' + firstThumb + '" alt="" /></a>');
-					$('.sp-wrap').css('display', 'inline-block');
+					$(ctrlID).css('display', 'inline-block');
 				// If only one image
 				} else {
 					$(this).append('<div class="sp-large"></div>');
 					$('a', this).appendTo($('.sp-large', this)).addClass('.sp-current-big');
-					$('.sp-wrap').css('display', 'inline-block');
+					$(ctrlID).css('display', 'inline-block');
 				}
 			});
 
@@ -55,12 +50,12 @@
 
 			// Is this a touch screen or not?
 			$(document.body).on('mouseover', function(event) {
-				$('.sp-wrap').removeClass('sp-touch').addClass('sp-non-touch');
+				$(ctrlID).removeClass('sp-touch').addClass('sp-non-touch');
 				event.preventDefault();
 			});
 
 			$(document.body).on('touchstart', function() {
-				$('.sp-wrap').removeClass('sp-non-touch').addClass('sp-touch');
+				$(ctrlID).removeClass('sp-non-touch').addClass('sp-touch');
 			});
 
 			// Clicking a thumbnail
@@ -69,28 +64,28 @@
 				event.preventDefault();
 				$(this).parent().find('.sp-current').removeClass();
 				$(this).addClass('sp-current');
-				$(this).parents('.sp-wrap').find('.sp-thumbs').removeClass('sp-tb-active');
-				$(this).parents('.sp-wrap').find('.sp-zoom').remove();
+				$(this).parents(ctrlID).find('.sp-thumbs').removeClass('sp-tb-active');
+				$(this).parents(ctrlID).find('.sp-zoom').remove();
 
-				var currentHeight = $(this).parents('.sp-wrap').find('.sp-large').height(),
-					currentWidth = $(this).parents('.sp-wrap').find('.sp-large').width();
-				$(this).parents('.sp-wrap').find('.sp-large').css({
+				var currentHeight = $(this).parents(ctrlID).find('.sp-large').height(),
+					currentWidth = $(this).parents(ctrlID).find('.sp-large').width();
+				$(this).parents(ctrlID).find('.sp-large').css({
 					overflow: 'hidden',
 					height: currentHeight + 'px',
 					width: currentWidth + 'px'
 				});
 
-				$(this).addClass('sp-current').parents('.sp-wrap').find('.sp-large a').remove();
+				$(this).addClass('sp-current').parents(ctrlID).find('.sp-large a').remove();
 
 				var nextLarge = $(this).parent().find('.sp-current').attr('href'),
 					nextThumb = get_url_from_background($(this).parent().find('.sp-current').css('backgroundImage'));
 
-				$(this).parents('.sp-wrap').find('.sp-large').html('<a href="' + nextLarge + '" class="sp-current-big"><img src="' + nextThumb + '"/></a>');
-				$(this).parents('.sp-wrap').find('.sp-large').hide().fadeIn(250, function() {
+				$(this).parents(ctrlID).find('.sp-large').html('<a href="' + nextLarge + '" class="sp-current-big"><img src="' + nextThumb + '"/></a>');
+				$(this).parents(ctrlID).find('.sp-large').hide().fadeIn(250, function() {
 
-					var autoHeight = $(this).parents('.sp-wrap').find('.sp-large img').height();
+					var autoHeight = $(this).parents(ctrlID).find('.sp-large img').height();
 
-					$(this).parents('.sp-wrap').find('.sp-large').animate({
+					$(this).parents(ctrlID).find('.sp-large').animate({
 						height: autoHeight
 					}, 'fast', function() {
 						$('.sp-large').css({
@@ -99,7 +94,7 @@
 						});
 					});
 
-					$(this).parents('.sp-wrap').find('.sp-thumbs').addClass('sp-tb-active');
+					$(this).parents(ctrlID).find('.sp-thumbs').addClass('sp-tb-active');
 				});
 			});
 
@@ -120,11 +115,11 @@
 			});
 
 			// Open in Lightbox non-touch
-			$(document.body).on('click', '.sp-non-touch .sp-zoom', function(event) {
+			$(ctrlID).parent().on('click', '.sp-non-touch .sp-zoom', function (event) {
 				var currentImg = $(this).html(),
-					thumbAmt = $(this).parents('.sp-wrap').find('.sp-thumbs a').length,
-					currentThumb = ($(this).parents('.sp-wrap').find('.sp-thumbs .sp-current').index())+1;
-				$(this).parents('.sp-wrap').addClass('sp-selected');
+					thumbAmt = $(this).parents(ctrlID).find('.sp-thumbs a').length,
+					currentThumb = ($(this).parents(ctrlID).find('.sp-thumbs .sp-current').index())+1;
+				$(this).parents(ctrlID).addClass('sp-selected');
 				$('body').append("<div class='sp-lightbox' data-currenteq='"+currentThumb+"'>" + currentImg + "</div>");
 
 				if(thumbAmt > 1){
@@ -142,10 +137,10 @@
 			// Open in Lightbox touch
 			$(document.body).on('click', '.sp-large a', function(event) {
 				var currentImg = $(this).attr('href'),
-					thumbAmt = $(this).parents('.sp-wrap').find('.sp-thumbs a').length,
-					currentThumb = ($(this).parents('.sp-wrap').find('.sp-thumbs .sp-current').index())+1;
+					thumbAmt = $(this).parents(ctrlID).find('.sp-thumbs a').length,
+					currentThumb = ($(this).parents(ctrlID).find('.sp-thumbs .sp-current').index())+1;
 
-				$(this).parents('.sp-wrap').addClass('sp-selected');
+				$(this).parents(ctrlID).addClass('sp-selected');
 				$('body').append('<div class="sp-lightbox" data-currenteq="'+currentThumb+'"><img src="' + currentImg + '"/></div>');
 
 				if(thumbAmt > 1){
