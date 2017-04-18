@@ -1,11 +1,11 @@
-#Smoothproducts
+# Smoothproducts
 A lightweight & simple jQuery product viewer script by <a href="http://kthornbloom.com">Kevin Thornbloom</a>.
 
 
-##Demo
+## Demo
 <a href="http://kthornbloom.com/smoothproducts" target="_blank">Open demo in new window</a>
 
-##Features
+## Features
 
 - Easy to use
 - Easy to style
@@ -15,7 +15,7 @@ A lightweight & simple jQuery product viewer script by <a href="http://kthornblo
 - Lightbox style full zoom on click
 - Handles multiple instances on one page
 
-##Usage
+## Usage
 
 - Add the CSS to your stylesheet, or just call it in your header:
 
@@ -66,11 +66,11 @@ A lightweight & simple jQuery product viewer script by <a href="http://kthornblo
 </div>
 ```
 
-##Plugins
+## Plugins
 
 A Rails plugin providing the necessary files is [available here](https://github.com/calve/smoothproducts_rails).
 
-##Licensing
+## Licensing
 Free to use and modify personally or commercially. Not for resale. 
 
 
