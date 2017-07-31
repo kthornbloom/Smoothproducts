@@ -19,12 +19,12 @@ A lightweight & simple jQuery product viewer script by <a href="http://kthornblo
 
 - Add the CSS to your stylesheet, or just call it in your header:
 
-```
+```html
 <link rel="stylesheet" href="css/smoothproducts.css">
 ```
 - Add & call javascript in your footer:
 
-```
+```html
 <script type="text/javascript" src="js/smoothproducts.min.js"></script>
 <script type="text/javascript">
     /* wait for images to load */
@@ -35,7 +35,7 @@ A lightweight & simple jQuery product viewer script by <a href="http://kthornblo
 ```
 - In your HTML, add a wrapper div called "sp-wrap". Inside should be your medium-sized thumbnail images. Each thumbnail should be linked to the higher-resolution version of its self. Use thumbnails of the same width for best results. (You may use different heights)
 
-```
+```html
 <div class="sp-wrap">
 	<a href="images/1.jpg"><img src="images/1_tb.jpg" alt=""></a>
 	<a href="images/2.jpg"><img src="images/2_tb.jpg" alt=""></a>
@@ -43,7 +43,7 @@ A lightweight & simple jQuery product viewer script by <a href="http://kthornblo
 ```
 - You may add an element with a class of "sp-loading" and style it however you'd like. This div will be removed once the images have loaded and the viewer gets added to the page. 
 
-```
+```html
 <div class="sp-loading"><img src="images/sp-loading.gif" alt=""><br>LOADING IMAGES</div>
 <div class="sp-wrap">
 	<a href="images/1.jpg"><img src="images/1_tb.jpg" alt=""></a>
@@ -52,14 +52,14 @@ A lightweight & simple jQuery product viewer script by <a href="http://kthornblo
 ```
 - You may wish to add a max-width equal to the width of your preview images. Apply this to the .sp-wrap class in the stylesheet.
 
-```
+```css
 	.sp-wrap {
 	    max-width: 300px;
 	}
 ```
 - You may add a class of "sp-default" to an image link. This will cause that image to be selected by default when the page loads, instead of the first image in the list. (Thanks to <a href="https://github.com/andynoelker">Andy Noelker</a>)
 
-```
+```html
 <div class="sp-wrap">
 	<a href="images/1.jpg"><img src="images/1_tb.jpg" alt=""></a>
 	<a href="images/2.jpg" class="sp-default"><img src="images/2_tb.jpg" alt=""></a>
