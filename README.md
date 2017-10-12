@@ -1,5 +1,5 @@
 # Smoothproducts
-A lightweight & simple jQuery product viewer script by <a href="http://kthornbloom.com">Kevin Thornbloom</a>.
+A lightweight & simple jQuery product viewer script
 
 
 ## Demo
