@@ -9,6 +9,15 @@
 
 (function($) {
 	$.fn.extend({
+		deleteSmoothProducts: function () {
+			$(document.body).off('click', '.sp-lightbox');
+			$(document.body).off('click', '#sp-prev');
+			$(document.body).off('click', '#sp-next');
+			$(document.body).off('click', '.sp-large a');
+			$(document.body).off('click', '.sp-noff-touch .sp-zoom');
+			$(document.body).off('click', '.sp-tb-active a');
+			$(document.body).off('click', '.sp-thumbs');
+		},
 		smoothproducts: function() {
 
 			// Add some markup & set some CSS
