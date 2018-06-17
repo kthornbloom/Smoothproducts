@@ -66,6 +66,33 @@ A lightweight & simple jQuery product viewer script
 </div>
 ```
 
+## AngularJS
+
+- For AngularJS you may do an iteration over the images in an array. When the iteration gets to the last element of the array the directive is called to activate the plugin. The directive calls a function to delete previous event listeners of the plugin to prevent flickering and unexpected behaviours on single-page websites.
+
+```html
+<div class="sp-wrap">
+	<a href="{{image.url}}" ng-repeat="image in images track by $index"><img src="{{image.tb.url}}" alt=""></a>
+	<div ng-if="$last" activate_photos></div>
+</div>
+```
+
+```js
+	app.directive('activatePhotos', [
+	'timeout', function(timeout) {
+		return {
+			restrict: 'A',
+			link: function(scope, elem, attr) {
+				return timeout(function() {
+					$('.sp-wrap').deleteSmoothProducts(); //clear previous event listeners
+					$('.sp-wrap').smoothproducts();
+				});
+			}
+		};
+	}
+	]);
+```
+
 ## Plugins
 
 A Rails plugin providing the necessary files is [available here](https://github.com/calve/smoothproducts_rails).
