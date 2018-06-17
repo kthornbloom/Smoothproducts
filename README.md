@@ -68,7 +68,7 @@ A lightweight & simple jQuery product viewer script
 
 ## AngularJS
 
-- For AngularJS you may do an iteration over the images in an array. When the iteration gets to the last element of the array the directive is called to activate the plugin. The directive calls a function to delete previous event listeners of the plugin to prevent flickering and unexpected behaviours on single-page websites.
+- For AngularJS you may do an iteration over the images in an array. When the iteration gets to the last element of the array the directive is called to activate the plugin. The directive calls a function to delete previous event listeners of the plugin to prevent flickering and unexpected behaviors on single-page websites.
 
 ```html
 <div class="sp-wrap">
