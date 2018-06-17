@@ -78,19 +78,19 @@ A lightweight & simple jQuery product viewer script
 ```
 
 ```js
-	app.directive('activatePhotos', [
-	'timeout', function(timeout) {
-		return {
-			restrict: 'A',
-			link: function(scope, elem, attr) {
-				return timeout(function() {
-					$('.sp-wrap').deleteSmoothProducts(); //clear previous event listeners
-					$('.sp-wrap').smoothproducts();
-				});
-			}
-		};
-	}
-	]);
+app.directive('activatePhotos', [
+'timeout', function(timeout) {
+	return {
+		restrict: 'A',
+		link: function(scope, elem, attr) {
+			return timeout(function() {
+				$('.sp-wrap').deleteSmoothProducts(); //clear previous event listeners
+				$('.sp-wrap').smoothproducts();
+			});
+		}
+	};
+}
+]);
 ```
 
 ## Plugins
