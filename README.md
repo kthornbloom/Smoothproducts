@@ -2,9 +2,6 @@
 A lightweight & simple jQuery product viewer script
 
 
-## Demo
-<a href="http://kthornbloom.com/smoothproducts" target="_blank">Open demo in new window</a>
-
 ## Features
 
 - Easy to use
