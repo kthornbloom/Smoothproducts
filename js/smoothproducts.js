@@ -18,12 +18,12 @@
 			$(document.body).off('click', '.sp-tb-active a');
 			$(document.body).off('click', '.sp-thumbs');
 		},
-		smoothproducts: function() {
+		smoothproducts: function(selector = '') {
 
 			// Add some markup & set some CSS
 
 			$('.sp-loading').hide();
-			$('.sp-wrap').each(function() {
+			$(selector + '.sp-wrap').each(function() {
 				$(this).addClass('sp-touch');
 				var thumbQty = $('a', this).length;
 
